@@ -10,59 +10,67 @@ namespace Items
     {
         public static GameObject CreateItem(Item item)
         {
-            var meshBytes = item.Visual.SourceBytes;
-            var mesh = MeshSerializer.DeserializeMesh(meshBytes);
-            mesh.RecalculateBounds();
-
             var go = new GameObject();
-            go.AddComponent<MeshFilter>().mesh = mesh;
+            go.name = item.Name;
 
-            var mats = new List<UnityEngine.Material>();
-            foreach (var m in item.Visual.Materials)
+            foreach (var visual in item.Visuals)
             {
-                var mat = new UnityEngine.Material(Shader.Find("Standard"));
+                var visualGo = new GameObject();
+                visualGo.transform.SetParent(go.transform, false);
+                
+                var meshBytes = visual.SourceBytes;
+                var mesh = MeshSerializer.DeserializeMesh(meshBytes);
+                mesh.RecalculateBounds();
 
-                foreach (var (key, value) in m.IntProperties)
-                {
-                    mat.SetInt(key, value);
-                }
+                visualGo.AddComponent<MeshFilter>().mesh = mesh;
 
-                foreach (var (key, value) in m.FloatProperties)
+                var mats = new List<UnityEngine.Material>();
+                foreach (var m in visual.Materials)
                 {
-                    mat.SetFloat(key, value);
-                }
+                    var mat = new UnityEngine.Material(Shader.Find("Standard"));
 
-                foreach (var (key, value) in m.ColorProperties)
-                {
-                    mat.SetColor(key, value);
-                }
-
-                foreach (var (key, value) in m.TextureProperties)
-                {
-                    var texbytes = value.SourceBytes;
-                    var texture2D = new Texture2D(2, 2);
-                    texture2D.LoadImage(texbytes);
-                    mat.SetTexture(key, texture2D);
-                }
-
-                foreach (var (key, value) in m.BoolProperties)
-                {
-                    if (value)
+                    foreach (var (key, value) in m.IntProperties)
                     {
-                        mat.EnableKeyword(key);
+                        mat.SetInt(key, value);
                     }
-                    else
+
+                    foreach (var (key, value) in m.FloatProperties)
                     {
-                        mat.DisableKeyword(key);
+                        mat.SetFloat(key, value);
                     }
+
+                    foreach (var (key, value) in m.ColorProperties)
+                    {
+                        mat.SetColor(key, value);
+                    }
+
+                    foreach (var (key, value) in m.TextureProperties)
+                    {
+                        var texbytes = value.SourceBytes;
+                        var texture2D = new Texture2D(2, 2);
+                        texture2D.LoadImage(texbytes);
+                        mat.SetTexture(key, texture2D);
+                    }
+
+                    foreach (var (key, value) in m.BoolProperties)
+                    {
+                        if (value)
+                        {
+                            mat.EnableKeyword(key);
+                        }
+                        else
+                        {
+                            mat.DisableKeyword(key);
+                        }
+                    }
+
+                    mat.renderQueue = m.RenderQueue;
+
+                    mats.Add(mat);
                 }
 
-                mat.renderQueue = m.RenderQueue;
-
-                mats.Add(mat);
+                visualGo.AddComponent<MeshRenderer>().materials = mats.ToArray();
             }
-
-            go.AddComponent<MeshRenderer>().materials = mats.ToArray();
 
             return go;
         }

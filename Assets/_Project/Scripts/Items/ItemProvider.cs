@@ -34,11 +34,14 @@ namespace Items
             var tasks = new List<Task>();
             foreach (var item in items)
             {
-                tasks.Add(DownloadMesh(item.Visual));
-
-                foreach (var (key, texture) in item.Visual.Materials.SelectMany(m => m.TextureProperties))
+                foreach (var visual in item.Visuals)
                 {
-                    tasks.Add(DownloadTexture(texture));
+                    tasks.Add(DownloadMesh(visual));
+
+                    foreach (var (key, texture) in visual.Materials.SelectMany(m => m.TextureProperties))
+                    {
+                        tasks.Add(DownloadTexture(texture));
+                    }
                 }
             }
 
