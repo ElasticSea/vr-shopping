@@ -27,18 +27,18 @@ namespace Items
         public async Task<List<Item>> ListItems(int limit)
         {
             var json = await (await client.GetAsync(endpointUrl)).Content.ReadAsStringAsync();
-            var items = JsonConvert.DeserializeObject<List<Item>>(json, new ColorConverter(), new StringEnumConverter());
+            var items = JsonConvert.DeserializeObject<List<Item>>(json, new ColorConverter(), new StringEnumConverter())
+                .Take(limit)
+                .ToList();
 
             var tasks = new List<Task>();
-            foreach (var item in items.Take(limit))
+            foreach (var item in items)
             {
-                var task = DownloadMesh(item.Visual);
-                tasks.Add(task);
+                tasks.Add(DownloadMesh(item.Visual));
 
                 foreach (var (key, texture) in item.Visual.Materials.SelectMany(m => m.TextureProperties))
                 {
-                    task = DownloadTexture(texture);
-                    tasks.Add(task);
+                    tasks.Add(DownloadTexture(texture));
                 }
             }
 
