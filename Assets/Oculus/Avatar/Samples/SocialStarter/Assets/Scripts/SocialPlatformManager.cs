@@ -132,7 +132,7 @@ public class SocialPlatformManager : MonoBehaviour
 
         TransitionToState(State.INITIALIZING);
 
-        Core.AsyncInitialize().OnComplete(InitCallback);
+        Oculus.Platform.Core.AsyncInitialize().OnComplete(InitCallback);
 
         roomManager = new RoomManager();
         p2pManager = new P2PManager();
