@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Core.Extensions;
 using Items;
 using Items.Model;
+using OculusSampleFramework;
 using UnityEngine;
 using Bounds = UnityEngine.Bounds;
 
-public class ShowItems : MonoBehaviour
+public class FillShelves : MonoBehaviour
 {
     [SerializeField] private int maxItems = 30;
     [SerializeField] private BoxCollider[] shelfs;
@@ -49,7 +50,9 @@ public class ShowItems : MonoBehaviour
             {
                 var go2 = Instantiate(go, space.transform, false);
                 go2.transform.localPosition = new Vector3(positionX, boundsMin.y, positionZ) - itemBounds.min;
-                    
+
+                SetupItem(go2);
+                
                 positionZ += itemBounds.size.z + offset.y;
 
                 if (positionZ + itemBounds.size.z > bounds.max.z )
@@ -65,5 +68,21 @@ public class ShowItems : MonoBehaviour
         }
 
         return index;
+    }
+
+    private void SetupItem(GameObject item)
+    {
+        var bounds = item.GetCompositeMeshBounds();
+        
+        var boxCollider = item.AddComponent<BoxCollider>();
+        boxCollider.center = bounds.center;
+        boxCollider.size = bounds.size;
+                
+        var grabbabale = item.AddComponent<OVRGrabbable>();
+        grabbabale.snapOffset = item.transform;
+        grabbabale.grabPoints = new[] {boxCollider};
+                
+        var rigidbody = item.AddComponent<Rigidbody>();
+        rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
     }
 }

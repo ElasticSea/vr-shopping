@@ -31,7 +31,7 @@ public class OVRGrabbable : MonoBehaviour
     [SerializeField]
     protected Transform m_snapOffset;
     [SerializeField]
-    protected Collider[] m_grabPoints = null;
+    protected Collider[] m_grabPoints = new Collider[0];
 
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
@@ -57,9 +57,10 @@ public class OVRGrabbable : MonoBehaviour
 	/// If true, the object's position will snap to match snapOffset when grabbed.
 	/// </summary>
     public bool snapPosition
-    {
-        get { return m_snapPosition; }
-    }
+	{
+		get { return m_snapPosition; }
+		set => m_snapPosition = value;
+	}
 
 	/// <summary>
 	/// If true, the object's orientation will snap to match snapOffset when grabbed.
@@ -73,9 +74,10 @@ public class OVRGrabbable : MonoBehaviour
 	/// An offset relative to the OVRGrabber where this object can snap when grabbed.
 	/// </summary>
     public Transform snapOffset
-    {
-        get { return m_snapOffset; }
-    }
+	{
+		get { return m_snapOffset; }
+		set => m_snapOffset = value;
+	}
 
 	/// <summary>
 	/// Returns the OVRGrabber currently grabbing this object.
@@ -105,9 +107,10 @@ public class OVRGrabbable : MonoBehaviour
 	/// The contact point(s) where the object was grabbed.
 	/// </summary>
     public Collider[] grabPoints
-    {
-        get { return m_grabPoints; }
-    }
+	{
+		get { return m_grabPoints; }
+		set => m_grabPoints = value;
+	}
 
 	/// <summary>
 	/// Notifies the object that it has been grabbed.
@@ -130,22 +133,6 @@ public class OVRGrabbable : MonoBehaviour
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
         m_grabbedCollider = null;
-    }
-
-    void Awake()
-    {
-        if (m_grabPoints.Length == 0)
-        {
-            // Get the collider from the grabbable
-            Collider collider = this.GetComponent<Collider>();
-            if (collider == null)
-            {
-				throw new ArgumentException("Grabbables cannot have zero grab points and no collider -- please add a grab point or collider.");
-            }
-
-            // Create a default grab point
-            m_grabPoints = new Collider[1] { collider };
-        }
     }
 
     protected virtual void Start()
