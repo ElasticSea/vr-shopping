@@ -12,6 +12,7 @@ namespace Items
         {
             var meshBytes = item.Visual.SourceBytes;
             var mesh = MeshSerializer.DeserializeMesh(meshBytes);
+            mesh.RecalculateBounds();
 
             var go = new GameObject();
             go.AddComponent<MeshFilter>().mesh = mesh;
