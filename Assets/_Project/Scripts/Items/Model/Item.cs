@@ -6,6 +6,8 @@ namespace Items.Model
     {
         public string Name { get; set; } 
         public string Category { get; set; } 
+        public string Price { get; set; }
+        public string Weight { get; set; }
         public Bounds Bounds { get; set; } 
         public List<Visual> Visuals { get; set; }
     }
