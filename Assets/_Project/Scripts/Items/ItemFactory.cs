@@ -72,6 +72,12 @@ namespace Items
                 visualGo.AddComponent<MeshRenderer>().materials = mats.ToArray();
             }
 
+            var itemComponent = go.AddComponent<ItemComponent>();
+            itemComponent.Name = item.Name;
+            itemComponent.Category = item.Category;
+            itemComponent.Price = item.Price;
+            itemComponent.Weight = item.Weight;
+
             return go;
         }
     }
