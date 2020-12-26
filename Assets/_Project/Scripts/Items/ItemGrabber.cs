@@ -1,3 +1,5 @@
+using Core.Util.PropertyDrawers;
+using Items.Ui;
 using UnityEngine;
 
 namespace Items
@@ -5,18 +7,20 @@ namespace Items
     public class ItemGrabber : MonoBehaviour
     {
         [SerializeField] private OVRGrabber grabber;
-        [SerializeField] private ItemMetadataUi itemMetadataUi;
+        
+        [CustomObjectPicker(typeof(IItemMetadataUi))]
+        [SerializeField] private Component itemMetadataUi;
         
         private void Update()
         {
             var grabbedObject = grabber.grabbedObject;
             if (grabbedObject && grabbedObject.GetComponent<ItemComponent>())
             {
-                itemMetadataUi.Item = grabbedObject.GetComponent<ItemComponent>();
+                ((IItemMetadataUi)itemMetadataUi).Item = grabbedObject.GetComponent<ItemComponent>();
             }
             else
             {
-                itemMetadataUi.Item = null;
+                ((IItemMetadataUi)itemMetadataUi).Item = null;
             }
         }
     }

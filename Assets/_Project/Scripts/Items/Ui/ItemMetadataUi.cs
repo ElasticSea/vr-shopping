@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using Core.Extensions;
 using Items;
+using Items.Ui;
 using TMPro;
 using UnityEngine;
 
-public class ItemMetadataUi : MonoBehaviour
+public class ItemMetadataUi : MonoBehaviour, IItemMetadataUi
 {
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform infoTransform;
@@ -49,11 +50,15 @@ public class ItemMetadataUi : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(camera.transform.forward);
 
             var rectSize = CalculateUiRectSize();
-
-            focusTransform.SetSize(rectSize);
-            infoTransform.anchoredPosition = infoTransform.anchoredPosition.SetX(-rectSize.x / 2);
-            infoTransform.SetHeight(rectSize.y);
+            SetRectSize(rectSize);
         }
+    }
+
+    private void SetRectSize(Vector2 rectSize)
+    {
+        focusTransform.SetSize(rectSize);
+        infoTransform.anchoredPosition = infoTransform.anchoredPosition.SetX(-rectSize.x / 2);
+        infoTransform.SetHeight(rectSize.y);
     }
 
     private Vector2 CalculateUiRectSize()
