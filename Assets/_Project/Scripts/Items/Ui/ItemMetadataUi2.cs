@@ -25,7 +25,7 @@ public class ItemMetadataUi2 : MonoBehaviour, IItemMetadataUi
                 if (item)
                 {
                     focusedItemBounds = item.gameObject.GetLocalMeshBounds();
-                    infoText.text = $"{item.Name}\n{item.Price}\n{Item.Weight}";
+                    infoText.text = $"{item.Name}\n${item.Price:F2}\n{Item.Weight}";
                     canvas.enabled = true;
                 }
                 else

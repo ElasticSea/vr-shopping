@@ -6,7 +6,7 @@ namespace Items
     {
         [SerializeField] private string name;
         [SerializeField] private string category;
-        [SerializeField] private string price;
+        [SerializeField] private float price;
         [SerializeField] private string weight;
 
         public string Name
@@ -21,7 +21,7 @@ namespace Items
             set => category = value;
         }
 
-        public string Price
+        public float Price
         {
             get => price;
             set => price = value;
