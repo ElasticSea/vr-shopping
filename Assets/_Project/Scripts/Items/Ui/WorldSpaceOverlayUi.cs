@@ -2,44 +2,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
-public class WorldSpaceOverlayUi : MonoBehaviour
+namespace Items.Ui
 {
-    private const string shaderTestMode = "unity_GUIZTestMode"; //The magic property we need to set
-
-    [SerializeField] UnityEngine.Rendering.CompareFunction
-        desiredUIComparison = UnityEngine.Rendering.CompareFunction.Always; //If you want to try out other effects
-
-    [Tooltip("Set to blank to automatically populate from the child UI elements")] [SerializeField]
-    Graphic[] uiElementsToApplyTo = new Graphic[0];
-
-    //Allows us to reuse materials
-    private Dictionary<Material, Material> materialMappings = new Dictionary<Material, Material>();
-
-    protected virtual void Start()
+    [ExecuteInEditMode]
+    public class WorldSpaceOverlayUi : MonoBehaviour
     {
-        if (uiElementsToApplyTo.Length == 0)
-        {
-            uiElementsToApplyTo = gameObject.GetComponentsInChildren<Graphic>();
-        }
+        private const string shaderTestMode = "unity_GUIZTestMode"; //The magic property we need to set
 
-        foreach (var graphic in uiElementsToApplyTo)
+        [SerializeField] UnityEngine.Rendering.CompareFunction
+            desiredUIComparison = UnityEngine.Rendering.CompareFunction.Always; //If you want to try out other effects
+
+        [Tooltip("Set to blank to automatically populate from the child UI elements")] [SerializeField]
+        Graphic[] uiElementsToApplyTo = new Graphic[0];
+
+        //Allows us to reuse materials
+        private Dictionary<Material, Material> materialMappings = new Dictionary<Material, Material>();
+
+        protected virtual void Start()
         {
-            Material material = graphic.materialForRendering;
-            if (material == null)
+            if (uiElementsToApplyTo.Length == 0)
             {
-                Debug.LogError($"{nameof(WorldSpaceOverlayUi)}: skipping target without material {graphic.name}.{graphic.GetType().Name}");
-                continue;
+                uiElementsToApplyTo = gameObject.GetComponentsInChildren<Graphic>();
             }
 
-            if (!materialMappings.TryGetValue(material, out Material materialCopy))
+            foreach (var graphic in uiElementsToApplyTo)
             {
-                materialCopy = new Material(material);
-                materialMappings.Add(material, materialCopy);
-            }
+                Material material = graphic.materialForRendering;
+                if (material == null)
+                {
+                    Debug.LogError($"{nameof(WorldSpaceOverlayUi)}: skipping target without material {graphic.name}.{graphic.GetType().Name}");
+                    continue;
+                }
 
-            materialCopy.SetInt(shaderTestMode, (int) desiredUIComparison);
-            graphic.material = materialCopy;
+                if (!materialMappings.TryGetValue(material, out Material materialCopy))
+                {
+                    materialCopy = new Material(material);
+                    materialMappings.Add(material, materialCopy);
+                }
+
+                materialCopy.SetInt(shaderTestMode, (int) desiredUIComparison);
+                graphic.material = materialCopy;
+            }
         }
     }
 }
