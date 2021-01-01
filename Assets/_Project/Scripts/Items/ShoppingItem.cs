@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class ItemComponent : MonoBehaviour
+    public class ShoppingItem : MonoBehaviour
     {
         [SerializeField] private string name;
         [SerializeField] private string category;

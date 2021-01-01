@@ -14,10 +14,10 @@ namespace Items.Ui
         [SerializeField] private Camera camera;
         [SerializeField] private float offset;
     
-        private ItemComponent item;
+        private ShoppingItem item;
         private Bounds focusedItemBounds;
 
-        public ItemComponent Item
+        public ShoppingItem Item
         {
             get => item;
             set

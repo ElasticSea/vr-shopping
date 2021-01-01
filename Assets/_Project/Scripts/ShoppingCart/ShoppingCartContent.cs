@@ -1,40 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using Items;
-using TMPro;
 using UnityEngine;
 
 namespace ShoppingCart
 {
     public class ShoppingCartContent : MonoBehaviour
     {
-        private HashSet<ItemComponent> content = new HashSet<ItemComponent>();
+        private HashSet<ShoppingItem> content = new HashSet<ShoppingItem>();
 
-        [SerializeField] private TMP_Text text;
-   
+        public event Action<ISet<ShoppingItem>> OnContentChanged = set => { };
+        
         private void OnTriggerEnter(Collider other)
         {
-            var item = other.GetComponent<ItemComponent>();
+            var item = other.GetComponent<ShoppingItem>();
             if (item)
             {
                 content.Add(item);
-                UpdateText();
+                OnContentChanged(content);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            var item = other.GetComponent<ItemComponent>();
+            var item = other.GetComponent<ShoppingItem>();
             if (item)
             {
                 content.Remove(item);
-                UpdateText();
+                OnContentChanged(content);
             }
-        }
-
-        private void UpdateText()
-        {
-            text.text = $"${content.Sum(component => component.Price):F2}";
         }
     }
 }

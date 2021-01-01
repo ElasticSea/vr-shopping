@@ -14,9 +14,9 @@ namespace Items
         private void Update()
         {
             var grabbedObject = grabber.grabbedObject;
-            if (grabbedObject && grabbedObject.GetComponent<ItemComponent>())
+            if (grabbedObject && grabbedObject.GetComponent<ShoppingItem>())
             {
-                ((IItemMetadataUi)itemMetadataUi).Item = grabbedObject.GetComponent<ItemComponent>();
+                ((IItemMetadataUi)itemMetadataUi).Item = grabbedObject.GetComponent<ShoppingItem>();
             }
             else
             {
