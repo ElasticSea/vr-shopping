@@ -1,5 +1,5 @@
 using System.Linq;
-using Core.Extensions;
+using ElasticSea.Framework.Extensions;
 using TMPro;
 using UnityEngine;
 

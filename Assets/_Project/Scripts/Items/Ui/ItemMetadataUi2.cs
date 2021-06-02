@@ -1,4 +1,4 @@
-﻿using Core.Extensions;
+﻿using ElasticSea.Framework.Extensions;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ namespace Items.Ui
                     item = value;
                     if (item)
                     {
-                        focusedItemBounds = item.gameObject.GetLocalMeshBounds();
+                        focusedItemBounds = item.gameObject.GetCompositeMeshBounds();
                         infoText.text = $"{item.Name}\n${item.Price:F2}\n{Item.Weight}";
                         canvas.enabled = true;
                     }

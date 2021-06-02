@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.Scripts.Extensions;
+using ElasticSea.Framework.Extensions;
 using Items.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

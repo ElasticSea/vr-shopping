@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Core.Scripts.Extensions;
-using Core.Util;
+using ElasticSea.Framework.Extensions;
+using ElasticSea.Framework.Util;
 using Items.Model;
 using UnityEngine;
 

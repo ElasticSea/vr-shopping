@@ -1,4 +1,4 @@
-using Core.Util.PropertyDrawers;
+using ElasticSea.Framework.Util.PropertyDrawers;
 using Items.Ui;
 using UnityEngine;
 
