@@ -1,7 +1,7 @@
 # VR Shopping
 https://user-images.githubusercontent.com/36990593/120388997-257f2900-c32c-11eb-818d-ce78595c95af.mp4
 
-Create your own virtual shopping experience. All products are streamed from an API including the meshes, textures, materials and the metadata.
+Create your own virtual shopping experience. Stream your shopping products through an API including the meshes, textures, materials and metadata.
 
 ## Product API
 `https://vr-shopping.azurewebsites.net/api/QueryItems`
