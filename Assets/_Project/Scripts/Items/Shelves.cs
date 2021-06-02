@@ -73,9 +73,9 @@ namespace Items
             boxCollider.center = bounds.center;
             boxCollider.size = bounds.size;
 
-            var grabbabale = item.AddComponent<OVRGrabbable>();
-            grabbabale.snapOffset = item.transform;
-            grabbabale.grabPoints = new[] {boxCollider};
+            // var grabbabale = item.AddComponent<OVRGrabbable>();
+            // grabbabale.snapOffset = item.transform;
+            // grabbabale.grabPoints = new[] {boxCollider};
 
             var rigidbody = item.AddComponent<Rigidbody>();
             rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
