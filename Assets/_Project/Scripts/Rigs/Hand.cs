@@ -19,6 +19,7 @@ namespace Rigs
         private Transform grabbedParent;
 
         public bool IsBeingGripped => holding;
+        public Rigidbody Grabbed => grabbed;
 
         private void Awake()
         {
