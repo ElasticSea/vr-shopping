@@ -6,7 +6,8 @@ Create your own virtual shopping experience. All products are streamed from an A
 ## Product API
 `https://vr-shopping.azurewebsites.net/api/QueryItems`
 
-Each item along with name, description and othermetada carries additional visual data, which consists source mesh and materials. All materials have standard default shader.  
+Each item along with name, description and othermetada carries additional visual data, which consists source mesh and materials. All materials have standard default shader.
+![github screenshot 1](https://user-images.githubusercontent.com/36990593/120515303-79424e80-c3ce-11eb-8ecc-710a8977ae64.png)
 ```json
 {
     "Id": 1,
@@ -71,16 +72,7 @@ Each item along with name, description and othermetada carries additional visual
             "RenderQueue": 3000
           }
         ]
-      },
-      ...
+      }
     ]
   }
 ```
-
-Each item has
-
-# vr-shopping
-
-Minimal oculus framework (without lipsync,samples,spatializer)
-Visuals format?
-Loading in background thread issues
